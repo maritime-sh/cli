@@ -1,0 +1,27 @@
+{
+  "name": "@anthropic-ai/maritime-cli",
+  "version": "0.1.0",
+  "description": "CLI for Maritime — AI agent hosting platform",
+  "type": "module",
+  "bin": {
+    "maritime": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "keywords": ["maritime", "ai", "agents", "cli", "deploy"],
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "conf": "^13.1.0",
+    "ora": "^8.2.0",
+    "smol-toml": "^1.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.3"
+  }
+}
