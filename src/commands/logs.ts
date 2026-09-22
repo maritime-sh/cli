@@ -4,6 +4,7 @@ import ora from "ora";
 import { requireApiKey } from "../lib/config.js";
 import { api } from "../lib/api.js";
 import { resolveAgent } from "../lib/resolver.js";
+import { startPolling } from "../lib/poll.js";
 
 interface LogEntry {
   id: string;
@@ -65,12 +66,20 @@ export const logs = new Command("logs")
       let lastTs = await printLogs();
 
       if (opts.follow) {
-        // Poll every 3 seconds
-        const poll = async () => {
-          lastTs = await printLogs(lastTs);
-          setTimeout(poll, 3000);
-        };
-        setTimeout(poll, 3000);
+        startPolling({
+          task: () => printLogs(lastTs),
+          intervalMs: 3000,
+          onResult: (nextTs) => {
+            lastTs = nextTs;
+          },
+          onError: (err) => {
+            console.error(
+              chalk.yellow(
+                `Log poll failed; retrying: ${err instanceof Error ? err.message : String(err)}`,
+              ),
+            );
+          },
+        });
       }
     } catch (err) {
       spinner.fail(err instanceof Error ? err.message : String(err));
