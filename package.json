@@ -8,7 +8,9 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "tsup --watch",
+    "test": "rm -rf .test-dist && tsc --outDir .test-dist --rootDir src && node --test .test-dist/lib/poll.test.js",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": ["maritime", "ai", "agents", "cli", "deploy"],
   "license": "MIT",
